@@ -261,8 +261,7 @@ input[type=checkbox]
 {
     padding: 10px;
     font-size: 2em;
-    border: 1px solid #dadada;
-    vertical-align: bottom;
+    border: 1px solid #dadada; 
 }
 
 .configuration .iconSquare
