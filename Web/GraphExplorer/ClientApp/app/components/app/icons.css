@@ -25,9 +25,7 @@
 
 .CommercialGraphIcons
 {
-    font-family: 'CommercialGraphIcons';
-    position: relative;
-    top: 1px;
+    font-family: 'CommercialGraphIcons';	
     display: inline-block;
     line-height: 1;
     font-style: normal;
