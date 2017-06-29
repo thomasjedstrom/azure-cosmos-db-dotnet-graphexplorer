@@ -5,6 +5,7 @@
     using System.Web.Http;
     using Utilities;
 
+    //[Authorize]
     public class SettingsController : ApiController
     {
         private const string id = "__settings";

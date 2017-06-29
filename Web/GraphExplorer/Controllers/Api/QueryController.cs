@@ -7,6 +7,7 @@
     using System.Threading.Tasks;
     using System.Web.Http;
 
+    //[Authorize]
     public class QueryController : ApiController
     {
         private FileSystemRepository<List<GraphQuery>> queryRepo = new FileSystemRepository<List<GraphQuery>>("queries.json");
