@@ -50,9 +50,9 @@ entering your Cosmos DB connection parameters for the following values in appset
 ```
 Login-AzureRmAccount
 ```
-3. In **boot.ts** change **alwaysRequireLogin** to *true* and replace *\<DirectoryID\>* in both URLs with your Tenant ID.
-4. Additionally replace in **web.config** the value of **ida:Tenant** with your Tenant ID and the value of **ida:Audience** with your Application ID
-5. Uncomment the *[Authorize]* attribute in **CollectionController.cs**, **GremlinController.cs**, **QueryController.cs** and **SettingsController.cs**
+3. In the file **boot.ts** change **alwaysRequireLogin** to *true* and replace {TenantID} in both URLs with your Tenant ID.
+4. Edit **Web.config** and set the value of "AuthenticationEnabled" to *true*.
+5. Additionally replace the value of **ida:Tenant** with your Tenant ID and the value of **ida:Audience** with your Application ID.
 
 ## Basic Description of the Application ##
 The web application allows you to run Gremlin queries against the sample data as well as data you create yourself.  It also allows you to assign icons and colors to vertices and edges and the default label for them to beautify the visualization of the graph.  Other features on the web application are:

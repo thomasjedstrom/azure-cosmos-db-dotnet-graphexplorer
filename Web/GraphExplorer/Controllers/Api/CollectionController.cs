@@ -9,7 +9,6 @@
     using System.Threading.Tasks;
     using System.Web.Http;
 
-    //[Authorize]
     public class CollectionController : ApiController
     {
         [HttpGet]

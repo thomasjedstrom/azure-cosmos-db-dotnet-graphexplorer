@@ -8,7 +8,6 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    //[Authorize]
     public class GremlinController : ApiController
     {
         static DocDbConfig dbConfig = AppSettings.Instance.GetSection<DocDbConfig>("DocumentDBConfig");

@@ -24,9 +24,9 @@ export function configure(aurelia: Aurelia) {
 function configureOauth(oauthService: OAuthService, oauthTokenService: OAuthTokenService, configureClient: (client: any) => void, client: any) {
     oauthService.configure(
         {
-            loginUrl: 'https://login.microsoftonline.com/<DirectoryID>/oauth2/authorize',
-            logoutUrl: 'https://login.microsoftonline.com/<DirectoryID>/oauth2/authorize',
-            clientId: '<ApplicationID>',
+            loginUrl: 'https://login.microsoftonline.com/{TenantId}/oauth2/authorize',
+            logoutUrl: 'https://login.microsoftonline.com/{TenantId}/oauth2/authorize',
+            clientId: '{ApplicationId}',
             alwaysRequireLogin: false
         });
 
