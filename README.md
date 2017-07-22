@@ -44,7 +44,7 @@ entering your Cosmos DB connection parameters for the following values in appset
 
 3. Run the application (F5).
 
-### Enabling Azure Active Directory Authentication
+### Enabling Azure Active Directory Authentication (optional)
 1. Register GraphExplorer with your Active Directory tenant (see <a href="https://docs.microsoft.com/en-us/azure/active-directory/active-directory-app-registration"> https://docs.microsoft.com/en-us/azure/active-directory/active-directory-app-registration</a>) and find the **Application ID**.
 2. Run the following Cmdlet in Powershell and login to get your **Tenant ID**:
 ```
