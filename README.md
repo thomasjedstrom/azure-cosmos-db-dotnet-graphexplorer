@@ -44,6 +44,16 @@ entering your Cosmos DB connection parameters for the following values in appset
 
 3. Run the application (F5).
 
+### Enabling Azure Active Directory Authentication (optional)
+1. Register GraphExplorer with your Active Directory tenant (see <a href="https://docs.microsoft.com/en-us/azure/active-directory/active-directory-app-registration"> https://docs.microsoft.com/en-us/azure/active-directory/active-directory-app-registration</a>) and find the **Application ID**.
+2. Run the following Cmdlet in Powershell and login to get your **Tenant ID**:
+```
+Login-AzureRmAccount
+```
+3. In the file **boot.ts** change **alwaysRequireLogin** to *true* and replace {TenantID} in both URLs with your Tenant ID.
+4. Edit **Web.config** and set the value of "AuthenticationEnabled" to *true*.
+5. Additionally replace the value of **ida:Tenant** with your Tenant ID and the value of **ida:Audience** with your Application ID.
+
 ## Basic Description of the Application ##
 The web application allows you to run Gremlin queries against the sample data as well as data you create yourself.  It also allows you to assign icons and colors to vertices and edges and the default label for them to beautify the visualization of the graph.  Other features on the web application are:
 * **Saving and Loading Gremlin queries**.  (Note: If you upload the sample data, a set of sample queries will be available for you.)

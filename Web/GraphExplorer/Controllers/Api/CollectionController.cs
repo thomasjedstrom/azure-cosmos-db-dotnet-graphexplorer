@@ -10,7 +10,7 @@
     using System.Web.Http;
 
     public class CollectionController : ApiController
-    {  
+    {
         [HttpGet]
         public dynamic GetCollections()
         {

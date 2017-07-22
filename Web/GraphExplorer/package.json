@@ -9,6 +9,7 @@
     "aurelia-history-browser": "^1.0.0",
     "aurelia-loader-webpack": "^1.0.0",
     "aurelia-logging-console": "^1.0.0",
+    "aurelia-oauth": "^0.3.0",
     "aurelia-pal-browser": "^1.0.0",
     "aurelia-polyfills": "^1.0.0",
     "aurelia-route-recognizer": "^1.0.0",
