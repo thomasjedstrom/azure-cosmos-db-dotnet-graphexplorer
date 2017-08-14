@@ -14,6 +14,7 @@ interface SavedQuery
     id: string;
     title: string;
     query: string;
+    positions: any;
 }
 
 interface Metadata
@@ -69,6 +70,7 @@ export class Network
     progressValue = 0;
     progressText: string;
     loading = false;
+    stabilizing = false;
     showConfiguration = false;
     redrawOnQuery = true;
 
@@ -105,9 +107,19 @@ export class Network
     labelMappings: { [label: string]: string } = {};
     edgeColors: { [label: string]: string } = {};
     selectedLabelProperty: string;
+    storedPositions: any;
+    saveNodePositionsWhenSavingQuery: boolean = false;
 
     nodes: any;
     edges: any;
+
+    commands =
+    {
+        '?': { desc: 'Display help', cmd: this.displayHelp },
+        'd': { desc: 'Delete current collection', cmd: this.deleteCurrentCollection },
+        'p': { desc: 'Disable physics', cmd: this.disablePhysics },
+        's': { desc: 'Saved node positions', cmd: this.savePositions }
+    };
 
     constructor(http: HttpClient, eventAggregator: EventAggregator)
     {
@@ -122,6 +134,63 @@ export class Network
                 this.showConsoleButton.classList.remove('pulseAnimation');
             }, 300);
         });
+    }
+
+    displayHelp() {
+        let help = '';
+        for (var cmd in this.commands) {
+            help += cmd + ': ' + this.commands[cmd].desc + '\n';
+        }
+        alert(help);
+
+        return false;
+    }
+
+    private deleteCurrentCollection() {
+        var del = confirm(`Are you sure you want to delete the current collection: ${this.selectedCollection}`);
+
+        if (!del) {
+            return;
+        }
+
+        this.http.fetch(`api/collection?name=${this.selectedCollection}`, { method: 'delete' })
+            .then((response: any) => { return this.handleErrors(response); })
+            .then((response: any) => {
+                this.getCollections();
+            });
+    }
+
+    private disablePhysics() {
+        this.network.setOptions(
+            {
+                physics: false
+            });
+        this.theConsole.write('physics disabled');
+    }
+
+    private savePositions()
+    {
+        this.saveNodePositionsWhenSavingQuery = true;
+        this.modal = this.modalTypes.SaveQuery;
+    }
+
+
+    queryKeyDown(e)
+    {
+        if (e.ctrlKey && e.altKey && e.key in this.commands) {
+            var showConsole;
+
+            try {
+                showConsole = this.commands[e.key].cmd.call(this);
+            }
+            catch (everything) {
+                this.theConsole.write(everything.toString());
+            }
+
+            if (showConsole !== false) {
+                this.theConsole.default();
+            }
+        }
     }
 
     executeQuery()
@@ -476,6 +545,10 @@ export class Network
 
                 //do not change _gLabel anywhere, this is the base gremlin node type
                 let visNode = { id: node.id, label: node.label, _gLabel: node.label, data: node };
+                if (this.storedPositions && this.storedPositions[node.id]) {
+                    (<any>visNode).x = this.storedPositions[node.id].x;
+                    (<any>visNode).y = this.storedPositions[node.id].y;
+                }
 
                 if (this.iconGroups[node.label])
                 {
@@ -525,7 +598,8 @@ export class Network
         options.physics = this.physics[this.selectedPhysics];
         options.physics.stabilization =
         {
-            iterations: 1250,
+            //onlyDynamicEdges: true,
+            iterations: this.storedPositions ? 1 : 1250,
             updateInterval: 1
         };
         options.physics.minVelocity = 5;
@@ -545,6 +619,7 @@ export class Network
 
         this.network.on("stabilizationProgress", (params) =>
         {
+            this.stabilizing = true;
             this.progressPercent = params.iterations / params.total;
             this.progressValue = Math.floor(this.progressPercent * 100);
         });
@@ -552,11 +627,16 @@ export class Network
         this.network.once("stabilizationIterationsDone", (params) =>
         {
             this.nicelyEndLoading();
+            if (this.storedPositions)
+            {
+                this.disablePhysics();
+            }
         });
     }
 
     private nicelyEndLoading(noGraphRendered?: boolean)
     {
+        this.stabilizing = false;
         this.progressPercent = 1;
         this.progressValue = 100;
 
@@ -642,7 +722,9 @@ export class Network
 
     private loadSavedQuery()
     {        
-        this.query = this.savedQueries.filter(x => x.id == this.selectedQueryId)[0].query;
+        var savedQuery = this.savedQueries.filter(x => x.id == this.selectedQueryId)[0];
+        this.query = savedQuery.query;
+        this.storedPositions = savedQuery.positions;
         this.modal = this.modalTypes.None;
         this.executeQuery();
     }
@@ -656,6 +738,12 @@ export class Network
 
     private saveCurrentQuery()
     {
+        let savedPositions = null;
+        if (this.saveNodePositionsWhenSavingQuery) {
+            this.network.storePositions();
+            savedPositions = this.network.getPositions();
+        }
+
         var postBody = { title: this.queryTitle, query: this.query };
 
         this.http.fetch(`api/query?collectionId=${this.selectedCollection}`, { method: 'post', body: json(postBody) })
@@ -665,6 +753,7 @@ export class Network
             })
         this.queryTitle = '';
         this.modal = this.modalTypes.None;
+        this.saveNodePositionsWhenSavingQuery = false;
     }
     /* end saved queries methods */
 

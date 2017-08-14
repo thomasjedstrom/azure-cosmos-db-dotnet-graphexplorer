@@ -1,7 +1,7 @@
 ﻿@font-face
 {
-	font-family: 'SegoeIcons';
-	src: local('☺'), url(../../../fonts/segmdl2.ttf);
+    font-family: 'SegoeIcons';
+    src: local('☺'), url(../../../fonts/segmdl2.ttf);
 }
 
 @font-face
@@ -10,22 +10,62 @@
     src: local('☺'), url(../../../fonts/Commercial-Graph-Icons.ttf);
 }
 
+@font-face
+{
+    font-family: 'SegoeSymbolIcons';
+    src: local('☺'), url(../../../fonts/seguisym.ttf);
+}
+
+@font-face
+{
+    font-family: 'SegoeEmojiIcons';
+    src: local('☺'), url(../../../fonts/seguiemj.ttf);
+}
+
 .icon, .SegoeIcons
 {
-	font-family: 'SegoeIcons';
-	position: relative;
-	top: 1px;
-	display: inline-block;
-	line-height: 1;
-	font-style: normal;
-	font-weight: normal;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+    font-family: 'SegoeIcons';
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    line-height: 1;
+    font-style: normal;
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .CommercialGraphIcons
 {
-    font-family: 'CommercialGraphIcons';	
+    font-family: 'CommercialGraphIcons';
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    line-height: 1;
+    font-style: normal;
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.SegoeSymbolIcons
+{
+    font-family: 'SegoeSymbolIcons';
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    line-height: 1;
+    font-style: normal;
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.SegoeEmojiIcons
+{
+    font-family: 'SegoeEmojiIcons';
+    position: relative;
+    top: 1px;
     display: inline-block;
     line-height: 1;
     font-style: normal;
@@ -36,32 +76,32 @@
 
 .icon-pencil:before
 {
-	content: "\e104";
+    content: "\e104";
 }
 
 .icon-collapse:before
 {
-	content: "\e73f";
+    content: "\e73f";
 }
 
 .icon-expand:before
 {
-	content: "\e740";
+    content: "\e740";
 }
 
 .icon-restore:before
 {
-	content: "\e743";
+    content: "\e743";
 }
 
 .icon-formatted:before
 {
-	content: "\e943";
+    content: "\e943";
 }
 
 .icon-unformatted:before
 {
-	content: "\ea37";
+    content: "\ea37";
 }
 
 .icon-close:before
@@ -77,4 +117,41 @@
 .icon-node:before
 {
     content: "\e18a";
+}
+
+.icon-spinner:before
+{
+    content: "\26AB";
+    font-family: 'SegoeSymbolIcons';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    font-size: 1.5em;
+    color: #369;
+}
+
+.icon-spinner
+{
+    animation-name: rotate;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    position: relative;
+    border: 2px solid #369;
+    border-radius: 4em;
+    width: 4em;
+    height: 4em;
+}
+
+@keyframes rotate
+{
+    from
+    {
+        transform: rotate(0);
+    }
+
+    to
+    {
+        transform: rotate(360deg);
+    }
 }

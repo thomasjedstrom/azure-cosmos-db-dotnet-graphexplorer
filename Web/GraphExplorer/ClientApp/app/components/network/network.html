@@ -9,7 +9,7 @@
     <form class="queryControl" submit.delegate="executeQuery()">
         <fieldset class="inputWrapper floatLeft">
             <div>
-                <input class="query" type="text" value.bind="query" placeholder="gremlin >" required>        
+                <input class="query" type="text" value.bind="query" keydown.delegate="queryKeyDown($event)" placeholder="gremlin >" required>        
             </div>
             <div class="actionsWrapper">
                 <div class="floatLeft">
@@ -24,7 +24,7 @@
             </div>            
         </fieldset>
         <fieldset class="floatLeft">
-            <button class="blackBtn" type="submit" disabled.bind="!query || loading">Execute</button>
+            <button class="blackBtn" type="submit" disabled.bind="!query || loading || stabilizing">Execute</button>
         </fieldset>
         <fieldset class="selectWrapper floatRight">
             <select value.bind="selectedCollection" change.delegate="collectionChange()" id="collectionCombo">
@@ -46,7 +46,12 @@
 
         <button class="showConfigBtn blackBtn" click.delegate="launchConfiguration()" if.bind="!showConfiguration && network && !loading && selector == selectorTypes.None">Configure Graph</button>
 
-        <div class="progressContainer" if.bind="loading">
+        <div class="loader" if.bind="loading">
+            <span class="icon icon-spinner"></span>
+            <div>Querying graph...</div>
+        </div>
+
+        <div class="progressContainer" if.bind="stabilizing">
             <div class="progressBarContainer">
                 <div class="progressText">${progressText}</div>
                 <div class="progressBar" css="width: ${progressPercent * 400}px;">
@@ -140,7 +145,7 @@
             <h3>Change icon</h3>
 
             <div class="actionControl">                
-                <button class="${icon.font} selectBox iconSquare" repeat.for="icon of icons" click.delegate="iconSelected(icon)">${icon.code}</button>
+                <button class="${icon.font} selectBox iconSquare" repeat.for="icon of icons" click.delegate="iconSelected(icon)" innerhtml.bind="icon.code"></button>
             </div>
         </floating>
 

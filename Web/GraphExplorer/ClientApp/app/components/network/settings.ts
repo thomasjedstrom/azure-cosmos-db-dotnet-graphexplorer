@@ -1,21 +1,17 @@
-export interface IconDefinition
-{
+﻿export interface IconDefinition {
     face: string;
     code: string;
     size: number;
     color: string;
 }
 
-export interface IconGroup
-{
+export interface IconGroup {
     shape: string;
     icon: IconDefinition;
 }
 
-export class Settings
-{
-    constructor()
-    {
+export class Settings {
+    constructor() {
         throw new Error("Cannot new this class");
     }
 
@@ -48,6 +44,15 @@ export class Settings
         { font: 'glyphicon', code: '\ue200' }, //tree
         { font: 'glyphicon', code: '\ue225' }, //piggy-bank
         { font: 'glyphicon', code: '\ue233' }, //graduation cap,
+        { font: 'glyphicon', code: '\ue010' }, // grid / windows logo
+        { font: 'glyphicon', code: '\ue062' }, // map marker
+        { font: 'glyphicon', code: '\ue087' }, // screen shot
+        { font: 'glyphicon', code: '\ue109' }, // calendar
+        { font: 'glyphicon', code: '\ue146' }, // push pin
+        { font: 'glyphicon', code: '\ue148' }, // USD
+        { font: 'glyphicon', code: '\ue165' }, // record
+        { font: 'glyphicon', code: '\ue183' }, // phone-alt
+        { font: 'glyphicon', code: '\ue177' }, // credit card
         { font: 'CommercialGraphIcons', code: '\uE90B' }, //organization
         { font: 'CommercialGraphIcons', code: '\uE903' }, //agreement
         { font: 'CommercialGraphIcons', code: '\uE8FB' }, //asset position
@@ -58,7 +63,29 @@ export class Settings
         { font: 'CommercialGraphIcons', code: '\uE901' }, //paws
         { font: 'CommercialGraphIcons', code: '\uE904' }, //soccer ball
         { font: 'CommercialGraphIcons', code: '\uE905' }, //wight lifting
-
+        { font: 'SegoeEmojiIcons', code: '⌚' },
+        { font: 'SegoeEmojiIcons', code: '⏱' },
+        { font: 'SegoeEmojiIcons', code: '☎' },
+        { font: 'SegoeEmojiIcons', code: '🌃' },
+        { font: 'SegoeEmojiIcons', code: '🌆' },
+        { font: 'SegoeEmojiIcons', code: '🌇' },
+        { font: 'SegoeEmojiIcons', code: '🌍' },
+        { font: 'SegoeEmojiIcons', code: '🏘' },
+        { font: 'SegoeEmojiIcons', code: '🏙' },
+        { font: 'SegoeEmojiIcons', code: '🏠' },
+        { font: 'SegoeEmojiIcons', code: '📅' },
+        { font: 'SegoeEmojiIcons', code: '📆' },
+        { font: 'SegoeEmojiIcons', code: '📞' },
+        { font: 'SegoeEmojiIcons', code: '📧' },
+        { font: 'SegoeEmojiIcons', code: '🕖' },
+        { font: 'SegoeEmojiIcons', code: '🛒' },
+        { font: 'SegoeEmojiIcons', code: '📍' },
+        { font: 'SegoeEmojiIcons', code: '📌' },
+        { font: 'SegoeEmojiIcons', code: '💰' },
+        { font: 'SegoeEmojiIcons', code: '💲' },
+        { font: 'SegoeEmojiIcons', code: '💳' },
+        { font: 'SegoeEmojiIcons', code: '💻' },
+        { font: 'SegoeEmojiIcons', code: '🎮' },
         null //empty
     ]
 

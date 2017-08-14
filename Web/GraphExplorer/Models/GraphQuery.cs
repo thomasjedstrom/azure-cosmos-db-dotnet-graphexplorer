@@ -1,6 +1,7 @@
 ﻿namespace GraphExplorer.Models
 {
     using Newtonsoft.Json;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Graph Query Class
@@ -24,5 +25,9 @@
         /// </summary>
         [JsonProperty("query")]
         public string Query { get; set; }
+
+
+        [JsonProperty("positions")]
+        public Dictionary<string, object> Positions { get; set; }
     }
 }

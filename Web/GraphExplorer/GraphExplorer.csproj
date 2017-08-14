@@ -331,6 +331,10 @@
   <ItemGroup>
     <Content Include="App_Data\queries.json" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClientApp\fonts\seguiemj.ttf" />
+    <Content Include="ClientApp\fonts\seguisym.ttf" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -353,6 +357,8 @@
           <DevelopmentServerPort>34641</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:34641/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:34641/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
