@@ -54,6 +54,12 @@ export class Network
     private searchString: string;
     private jsonPropertyContent: any;
 
+    /*Ramziabu - This will grab an encoded query parameter 'a'*/
+    queryStringValue = window.location.href;
+    valArray = this.queryStringValue.split("a=");
+    /*Ramziabu - if a has a value, set the firstLoadValue to what's passed, else have the default*/
+    firstLoadValue = this.valArray.length > 1 ? this.valArray[1] : "g.V();g.E();";
+
     PanelMode: PropertyPanelMode;
     SettingsMode: SettingsPanelMode;
     modalTypes = { None: 0, SaveQuery: 1, LoadQuery: 2, AddCollection: 3 };
@@ -87,7 +93,8 @@ export class Network
     selectedNodeIconFont: string = null;
     selectedNodeColor: string = null;
     savedQueries: Array<SavedQuery>;
-    query = 'g.V(); g.E()';
+    /*ramziabu: decode the firstLoadValue*/
+    query = decodeURIComponent(this.firstLoadValue);
     queryTitle: string;
     selectedQuery: SavedQuery;
     nodeTypeSettings: any; //all available Node Types in the displayed graph

@@ -18,5 +18,15 @@
 		<script type="text/javascript" src="~/wwwroot/dist/app.js?ver=@AppSettings.Instance.Version" asp-append-version="true"></script>
 
 		@RenderSection("scripts", required: false)
+        <!--ramziabu: when the page loads, wait for one second and if the default value is a custom query, programmatically click the Execute button -->
+        <script type="text/javascript">
+            setTimeout(function () {
+                var searchInputVal = document.getElementById("queryTextBox");
+                if (searchInputVal.value != "g.V();g.E();") {
+                    document.getElementsByClassName('blackBtn au-target')[0].click();
+                }
+            }, 1000);
+
+        </script>
 	</body>
 </html>
