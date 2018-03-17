@@ -5,6 +5,7 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 import { Settings } from './settings';
 import { Console } from '../console/console';
 import { Guide } from '../guide/guide';
+import { TableView } from '../tableview/tableview';
 import { viewEngineHooks } from 'aurelia-templating';
 
 declare var vis: any;
@@ -28,6 +29,10 @@ interface Metadata
     label?: string;
     _displayLabel?: string;
 }
+enum ViewMode {
+    Table,
+    Graph
+}
 
 enum PropertyPanelMode
 {
@@ -48,6 +53,7 @@ export class Network
     private networkContainer: HTMLElement;
     private showConsoleButton: HTMLElement;
     private theConsole: Console;
+    private theTableView: TableView;
     private graphMetadata: Metadata;
     private graphMetadataOriginal: Metadata;
     private http: HttpClient;
@@ -109,8 +115,15 @@ export class Network
     nodes: any;
     edges: any;
 
-    constructor(http: HttpClient, eventAggregator: EventAggregator)
-    {
+    private mode: ViewMode = ViewMode.Graph;
+    get Mode(): ViewMode {
+        return this.mode;
+    }
+    set Mode(value: ViewMode) {
+        this.mode = value;
+    }
+
+    constructor(http: HttpClient, eventAggregator: EventAggregator) {
         this.http = http;
         this.getCollections();
 
@@ -128,6 +141,7 @@ export class Network
     {
         this.resetUi();
 
+        this.theTableView.clear();
         this.progressText = "Querying DocumentDB";
         this.loading = true;
         this.http.fetch(`api/gremlin?query=${this.query}&collectionId=${this.selectedCollection}`)
@@ -151,6 +165,7 @@ export class Network
                             this.theConsole.write('No data returned from query', false);
                         }
 
+                        this.theTableView.write(query.queryResult);
                         dataForDisplay = dataForDisplay.concat(query.queryResult);
                     }
 
@@ -945,5 +960,6 @@ export class NetworkBinder
     {
         view.overrideContext.PropertyPanelMode = PropertyPanelMode;
         view.overrideContext.SettingsPanelMode = SettingsPanelMode;
+        view.overrideContext.ViewMode = ViewMode;
     }
 }

@@ -255,6 +255,9 @@
     <Content Include="ClientApp\app\components\app\app.html" />
     <Content Include="ClientApp\app\components\modal\modal.css" />
     <Content Include="ClientApp\app\components\modal\modal.html" />
+    <Content Include="ClientApp\app\components\tableview\tableview.css" />
+    <Content Include="ClientApp\app\components\tableview\tableview.html" />
+    <TypeScriptCompile Include="ClientApp\app\components\tableview\tableview.ts" />
     <Content Include="ClientApp\app\images\microsoft_logo.png" />
     <Content Include="ClientApp\vis\img\network\acceptDeleteIcon.png" />
     <Content Include="ClientApp\vis\img\network\addNodeIcon.png" />

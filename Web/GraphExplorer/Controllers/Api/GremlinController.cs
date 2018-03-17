@@ -7,6 +7,8 @@
     using GraphExplorer.Configuration;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using System;
+    using Microsoft.Azure.Documents.Client;
 
     public class GremlinController : ApiController
     {
@@ -34,7 +36,7 @@
                             .ContinueWith(
                                 (task) =>
                                 {
-                                    results.Add(new { queryText = singleQuery, queryResult = task.Result });
+                                    results.Add(new { queryText = singleQuery, queryResult = task.Result.Item1, queryStats = task.Result.Item2 });
                                 }
                             );
                 }
@@ -43,21 +45,33 @@
             return results;
         }
 
-        private async Task<List<dynamic>> ExecuteQuery(DocumentCollection coll, string query)
+        private async Task<Tuple<List<dynamic>, QueryStats>> ExecuteQuery(DocumentCollection coll, string query)
         {
             var results = new List<dynamic>();
+            var queryStats = new QueryStats();
 
-            var gremlinQuery = DocDbSettings.Client.CreateGremlinQuery(coll, query);
-
+            var gremlinQuery = DocDbSettings.Client.CreateGremlinQuery(coll, query, new FeedOptions() { PopulateQueryMetrics = true });
+            var dt = DateTime.Now;
             while (gremlinQuery.HasMoreResults)
             {
-                foreach (var result in await gremlinQuery.ExecuteNextAsync())
+                var feedResponse = await gremlinQuery.ExecuteNextAsync();
+                queryStats.RequestCharge += feedResponse.RequestCharge;
+                foreach (var result in feedResponse)
                 {
                     results.Add(result);
                 }
             }
-
-            return results;
+            queryStats.ExecutionTime = DateTime.Now.Subtract(dt).TotalSeconds;
+            return Tuple.Create(results, queryStats);
         }
+    }
+
+    public class QueryStats
+    {
+        public double RequestCharge { get; set; }
+        /// <summary>
+        /// Query execution time in s
+        /// </summary>
+        public double ExecutionTime { get; set; }
     }
 }

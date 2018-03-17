@@ -4,6 +4,8 @@
     <require from="../floating/floating.html"></require>
 	<require from="../console/console"></require>
     <require from="../guide/guide"></require>
+    <require from="../tableview/tableview"></require>
+
     <require from="../json-formatter/json-formatter"></require>
 
     <form class="queryControl" submit.delegate="executeQuery()">
@@ -34,6 +36,8 @@
         </fieldset>
 
         <div class="buttons">
+            <button class="linkBtn ${Mode === ViewMode.Table ? 'selected' : ''}" click.delegate="Mode=ViewMode.Table"><i class="icon icon-unformatted"></i>Table View</button>
+            <button class="linkBtn ${Mode === ViewMode.Graph ? 'selected' : ''}" click.delegate="Mode=ViewMode.Graph"><i class="icon icon-formatted"></i>Graph View</button>
             <button class="linkBtn" click.delegate="theGuide.expand()" show.bind="!theGuide.IsVisible">Show Guide</button>
             <button ref="showConsoleButton" class="linkBtn" click.delegate="theConsole.expand()" show.bind="!theConsole.IsVisible">Show Console</button>
         </div>
@@ -42,7 +46,11 @@
 	<console view-model.ref="theConsole"></console>
 	<guide view-model.ref="theGuide"></guide>
 
-    <div id="graphWorkspace">
+    <div show.bind="Mode === ViewMode.Table" id="tableWorkspace" style="overflow-y: scroll;overflow-x:scroll; height:800px">
+        <table-view view-model.ref="theTableView"></table-view>
+    </div>
+
+    <div show.bind="Mode === ViewMode.Graph" id="graphWorkspace">
 
         <button class="showConfigBtn blackBtn" click.delegate="launchConfiguration()" if.bind="!showConfiguration && network && !loading && selector == selectorTypes.None">Configure Graph</button>
 
